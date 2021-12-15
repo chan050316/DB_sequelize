@@ -1,0 +1,13 @@
+body 
+  h1 목록 추가하기
+  hr
+
+  form(action="/board/#{post.id}?_method=PUT" method="post")
+    table
+      tr
+        td
+          input(type="text" name="editTitle" value="${post.title}")
+      tr
+        td
+          input(type="text" name="editWriter" value="${post.writer}")
+    input(type="submit" value="전송하기")
