@@ -1,0 +1,24 @@
+body
+  h1 목록 추가하기
+  hr
+  form(action="/board" method="POST")
+    table
+      tr
+        td
+          input(type="text" name="inputTitle" placeholder="제목을 입력하세요.")
+      tr
+        td
+          input(type="text" name="inputWriter" placeholder="작성자를 입력하세요.")
+    input(type="submit", value="전송하기")
+
+-   for(let post of posts)
+      br
+      tr
+        td #{post.title}
+        td #{post.writer}
+        td #{post.createdAt}
+      button
+        a(href="/board/#{post.id}") 수정하기
+      from(action="/board/#{post.id}" method="POST")
+        td
+          input(type="submit", value="삭제하기")
