@@ -32,14 +32,54 @@ router.post("/board", (req, res, next) => {
     });
 });
 
+router.put("/board/:id", (req, res, next) => {
+  let postID = req.params.id;
+  let body = req.body;
+
+  models.post
+    .update(
+      {
+        title: body.editTitle,
+        writer: body.editWriter,
+      },
+      {
+        where: { id: postID },
+      }
+    )
+    .then(result => {
+      console.log("데이터 수정 완료");
+      res.redirect("/board");
+    })
+    .catch(err => {
+      console.log("데이터 수정 실패");
+    });
+});
+
+router.delete("/board/:id", (req, res, next) => {
+  let postID = req.params.id;
+
+  models.post
+    .destroy({
+      where: { id: postID },
+    })
+    .then(result => {
+      res.redirect("/board");
+    })
+    .catch(err => {
+      console.log("데이터 삭제 실패");
+    });
+});
+
 router.get("/edit/:id", (req, res, next) => {
   let postID = req.params.id;
   models.post
     .findOne({
       where: { id: postID },
     })
-    .then(edit, {
-      post: result,
+    .then(result => {
+      res.render("edit", {
+        post: result,
+      });
     })
     .catch(err => {
       console.log("데이터 조회 실패");
